@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TÍNH ĐIỂM XÉT TUYỂN HCMUT</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            background-color: #142d65; 
+            color: white; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            flex-direction: column;
+        }
+        .container { 
+            max-width: 40%; 
+            padding: 20px; 
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            position: relative;
+            transform: scale(0.5);
+            opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        input { 
+            margin: 5px; 
+            padding: 8px; 
+            width: 80px; 
+        }
+        button { 
+            padding: 10px; 
+            margin-top: 10px; 
+            background-color: #a73636;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #700b0b;
+        }
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.44);
+            opacity: 0.1;
+            z-index: -1;
+            width: 55%;
+        }
+        .signature {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+        h2, h3, h4 {
+            font-weight: bold;
+        }
+        h2 { font-size: 25px; }
+        h3 { font-size: 25px; }
+        h4 { font-size: 22px; color: rgb(120, 214, 133); }
+        .link-container {
+            margin-top: 20px;
+        }
+        .link-container a {
+            color: white;
+            font-size: 15px;
+            text-decoration: none;
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+        }
+        .link-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body onload="showContainer()">
+    <img src="https://raw.githubusercontent.com/ngvkhoa/TINHDIEMXTHCMUT/main/logo.png" alt="Logo" class="watermark">
+    <div class="container" id="mainContainer">
+        <h2>TÍNH ĐIỂM XÉT TUYỂN</h2>
+        <h3>ĐẠI HỌC BÁCH KHOA THÀNH PHỐ HỒ CHÍ MINH 2025</h3>
+        
+        <label>Điểm ĐGNL & Toán:</label>
+        <input type="number" id="diem_dgnl" placeholder="0-1200">
+        <input type="number" id="diem_toan" placeholder="0-300"><br>
+        
+        <label>Điểm 3 môn Tốt nghiệp THPT:</label>
+        <input type="number" id="diem_thpt1" placeholder="Môn 1">
+        <input type="number" id="diem_thpt2" placeholder="Môn 2">
+        <input type="number" id="diem_thpt3" placeholder="Môn 3"><br>
+        
+        <label>Điểm TB 3 môn xét tuyển (10-11-12):</label>
+        <input type="number" id="diem_tb" placeholder="0-10"><br>
+        
+        <button onclick="tinhDiem()">Tính Điểm</button>
+        <h4>Kết quả: <span id="ketqua">---</span></h4>
+    </div>
+    <div class="signature">ngvkhoa</div>
+    <div class="link-container">
+        <a href="https://tinyurl.com/2bpt2hnk" target="_blank">Xem cách tính tại đây</a>
+    </div>
+    
+    <script>
+        function tinhDiem() {
+            let diem_dgnl = parseFloat(document.getElementById("diem_dgnl").value) || 0;
+            let diem_toan = parseFloat(document.getElementById("diem_toan").value) || 0;
+            let diem_dgnl_tong = diem_dgnl + diem_toan;
+            
+            let diem_thpt1 = parseFloat(document.getElementById("diem_thpt1").value) || 0;
+            let diem_thpt2 = parseFloat(document.getElementById("diem_thpt2").value) || 0;
+            let diem_thpt3 = parseFloat(document.getElementById("diem_thpt3").value) || 0;
+
+            let diem_tb = parseFloat(document.getElementById("diem_tb").value) || 0;
+            
+            let diem_nang_luc = diem_dgnl_tong / 15;
+            let diem_thpt_quy_doi = ((diem_thpt1 + diem_thpt2 + diem_thpt3) / 3) * 10;
+            let diem_hoc_thpt = diem_tb * 10;
+            
+            let diem_hoc_luc = (diem_nang_luc * 0.7) + (diem_thpt_quy_doi * 0.2) + (diem_hoc_thpt * 0.1);
+            document.getElementById("ketqua").innerText = diem_hoc_luc.toFixed(2);
+        }
+        
+        function showContainer() {
+            let container = document.getElementById("mainContainer");
+            setTimeout(() => {
+                container.style.transform = "scale(1)";
+                container.style.opacity = "1";
+            }, 100);
+        }
+    </script>
+</body>
+</html>
