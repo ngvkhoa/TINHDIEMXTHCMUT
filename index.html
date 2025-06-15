@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TÍNH ĐIỂM XÉT TUYỂN HCMUT</title>
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ngvkhoa/TINHDIEMXTHCMUT/main/logo.png">
+    <title>TÍNH ĐIỂM XÉT TUYỂN ĐẠI HỌC 2025</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -14,13 +13,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow: auto;
             position: relative;
             flex-direction: column;
+            padding: 20px;
+        }
+        .main-container {
+            display: flex;
+            justify-content: space-around;
+            width: 90%;
+            max-width: 1200px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
         .container { 
-            max-width: 40%; 
+            width: 45%; 
+            min-width: 400px;
             padding: 20px; 
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
@@ -29,8 +38,9 @@
             transform: scale(0.5);
             opacity: 0;
             transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            margin-bottom: 20px;
         }
-        input { 
+        input, select { 
             margin: 5px; 
             padding: 8px; 
             width: 80px; 
@@ -50,15 +60,6 @@
         button:hover {
             background-color: #700b0b;
         }
-        .watermark {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.44);
-            opacity: 0.1;
-            z-index: -1;
-            width: 55%;
-        }
         .signature {
             position: fixed;
             bottom: 10px;
@@ -71,52 +72,110 @@
             font-weight: bold;
         }
         h2 { font-size: 25px; }
-        h3 { font-size: 25px; }
+        h3 { font-size: 20px; }
         h4 { font-size: 22px; color: rgb(120, 214, 133); }
-        .link-container {
-            margin-top: 20px;
+        .links-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+            flex-wrap: wrap;
         }
-        .link-container a {
+        .links-container a {
             color: white;
             font-size: 15px;
             text-decoration: none;
             font-weight: bold;
-            font-style: italic;
-            text-decoration: underline;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        .link-container a:hover {
-            text-decoration: underline;
+        .links-container a:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
         }
     </style>
 </head>
-<body onload="showContainer()">
-    <img src="https://raw.githubusercontent.com/ngvkhoa/TINHDIEMXTHCMUT/main/logo.png" alt="Logo" class="watermark">
-    <div class="container" id="mainContainer">
-        <h2>TÍNH ĐIỂM XÉT TUYỂN</h2>
-        <h3>ĐẠI HỌC BÁCH KHOA THÀNH PHỐ HỒ CHÍ MINH 2025</h3>
-        
-        <label>Điểm ĐGNL & Toán:</label>
-        <input type="number" id="diem_dgnl" placeholder="0-1200">
-        <input type="number" id="diem_toan" placeholder="0-300"><br>
-        
-        <label>Điểm 3 môn Tốt nghiệp THPT:</label>
-        <input type="number" id="diem_thpt1" placeholder="Môn 1">
-        <input type="number" id="diem_thpt2" placeholder="Môn 2">
-        <input type="number" id="diem_thpt3" placeholder="Môn 3"><br>
-        
-        <label>Điểm TB 3 môn xét tuyển (10-11-12):</label>
-        <input type="number" id="diem_tb" placeholder="0-10"><br>
-        
-        <button onclick="tinhDiem()">Tính Điểm</button>
-        <h4>Kết quả: <span id="ketqua">---</span></h4>
+<body onload="showContainers()">
+    <div class="main-container">
+        <div class="container" id="hcmutContainer">
+            <h2>ĐẠI HỌC BÁCH KHOA TP.HCM</h2>
+            <h3>TÍNH ĐIỂM XÉT TUYỂN 2025</h3>
+            
+            <div class="input-group">
+                <label>Điểm ĐGNL & Toán:</label>
+                <input type="number" id="diem_dgnl" placeholder="0-1200" min="0" max="1200">
+                <input type="number" id="diem_toan" placeholder="0-300" min="0" max="300"><br>
+            </div>
+            
+            <div class="input-group">
+                <label>Điểm 3 môn Tốt nghiệp THPT:</label>
+                <input type="number" id="diem_thpt1" placeholder="Môn 1" min="0" max="10" step="0.01">
+                <input type="number" id="diem_thpt2" placeholder="Môn 2" min="0" max="10" step="0.01">
+                <input type="number" id="diem_thpt3" placeholder="Môn 3" min="0" max="10" step="0.01"><br>
+            </div>
+            
+            <div class="input-group">
+                <label>Điểm TB 3 môn xét tuyển (10-11-12):</label>
+                <input type="number" id="diem_tb" placeholder="0-10" min="0" max="10" step="0.01"><br>
+            </div>
+            
+            <button onclick="tinhDiemHCMUT()">Tính Điểm</button>
+            <h4>Kết quả: <span id="ketqua_hcmut">---</span></h4>
+        </div>
+
+        <div class="container" id="hcmusContainer">
+            <h2>ĐẠI HỌC KHOA HỌC TỰ NHIÊN TP.HCM</h2>
+            <h3>TÍNH ĐIỂM XÉT TUYỂN HỌC BẠ 2025</h3>
+            
+            <div class="input-group">
+                <label>Điểm TB môn 1 (3 năm):</label>
+                <input type="number" id="hcmus_m1" placeholder="0-10" min="0" max="10" step="0.01">
+            </div>
+            
+            <div class="input-group">
+                <label>Điểm TB môn 2 (3 năm):</label>
+                <input type="number" id="hcmus_m2" placeholder="0-10" min="0" max="10" step="0.01">
+            </div>
+            
+            <div class="input-group">
+                <label>Điểm TB môn 3 (3 năm):</label>
+                <input type="number" id="hcmus_m3" placeholder="0-10" min="0" max="10" step="0.01">
+            </div>
+            
+            <div class="input-group">
+                <label>Giải học sinh giỏi TP:</label>
+                <select id="hcmus_giai">
+                    <option value="0">Không</option>
+                    <option value="1">Giải nhất</option>
+                    <option value="2">Giải nhì</option>
+                    <option value="3">Giải ba</option>
+                </select>
+            </div>
+            <button onclick="tinhDiemHCMUS()">Tính Điểm</button>
+            <h4>Kết quả: <span id="ketqua_hcmus">---</span></h4>
+        </div>
     </div>
+    
     <div class="signature">ngvkhoa</div>
-    <div class="link-container">
-        <a href="https://tinyurl.com/2bpt2hnk" target="_blank">Xem cách tính tại đây</a>
+    <div class="links-container">
+        <a href="https://tinyurl.com/2bpt2hnk" target="_blank">Xem cách tính HCMUT</a>
+        <a href="https://tuyensinh.hcmus.edu.vn/thong-bao-ve-phuong-thuc-xet-tuyen-1b-va-1c-nam-2025/" target="_blank">Xem cách tính HCMUS</a>        
     </div>
     
     <script>
-        function tinhDiem() {
+        function tinhDiemHCMUT() {
             let diem_dgnl = parseFloat(document.getElementById("diem_dgnl").value) || 0;
             let diem_toan = parseFloat(document.getElementById("diem_toan").value) || 0;
             let diem_dgnl_tong = diem_dgnl + diem_toan;
@@ -132,15 +191,39 @@
             let diem_hoc_thpt = diem_tb * 10;
             
             let diem_hoc_luc = (diem_nang_luc * 0.7) + (diem_thpt_quy_doi * 0.2) + (diem_hoc_thpt * 0.1);
-            document.getElementById("ketqua").innerText = diem_hoc_luc.toFixed(2);
+            document.getElementById("ketqua_hcmut").innerText = diem_hoc_luc.toFixed(2);
         }
         
-        function showContainer() {
-            let container = document.getElementById("mainContainer");
-            setTimeout(() => {
-                container.style.transform = "scale(1)";
-                container.style.opacity = "1";
-            }, 100);
+        function tinhDiemHCMUS() {
+            let m1 = parseFloat(document.getElementById("hcmus_m1").value) || 0;
+            let m2 = parseFloat(document.getElementById("hcmus_m2").value) || 0;
+            let m3 = parseFloat(document.getElementById("hcmus_m3").value) || 0;
+            let giai = parseInt(document.getElementById("hcmus_giai").value) || 0;
+            
+            let diem_hbhcmus = m1 + m2 + m3;
+            let diem_cong = 0;
+
+            if (giai === 1) diem_cong = 1.5;
+            else if (giai === 2) diem_cong = 1.5;
+            else if (giai === 3) diem_cong = 1.0;
+
+            let diem_tonghcmus;
+            if (diem_hbhcmus < 28) 
+                diem_tonghcmus = diem_hbhcmus + diem_cong;
+            if (diem_hbhcmus >= 28)
+                diem_tonghcmus = diem_hbhcmus + ((30-diem_hbhcmus)/2)*diem_cong;
+            
+            document.getElementById("ketqua_hcmus").innerText = diem_tonghcmus.toFixed(2);
+        }
+        
+        function showContainers() {
+            let containers = document.querySelectorAll(".container");
+            containers.forEach((container, index) => {
+                setTimeout(() => {
+                    container.style.transform = "scale(1)";
+                    container.style.opacity = "1";
+                }, 100 + (index * 100));
+            });
         }
     </script>
 </body>
